@@ -43,4 +43,4 @@ jobs:
         with:
           context: php/${{ matrix.php-versions }}/bullseye/fpm
           push: true
-          tags: icewind1991/php-dbg:${{ matrix.php-versions }}
+          tags: icewind1991/php-dbg:${{ matrix.php-versions }}-fpm
