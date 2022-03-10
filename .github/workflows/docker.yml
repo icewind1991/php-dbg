@@ -16,6 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         php-versions: ['7.3', '7.4', '8.0', '8.1']
+        variant: ['cli', 'apache', 'fpm']
 
     steps:
       - name: Checkout patch files
@@ -35,12 +36,13 @@ jobs:
       - name: Patch dockerfiles
         run: |
           patch -N -p1 -d php < debug.patch
-          patch -N -p1 -d php < version.patch
+          jq '. | with_entries(select(.key == "${{ matrix.php-versions }}"))' php/versions.json > php/versions.json.new
+          mv php/versions.json.new php/versions.json
           cd php; ./apply-templates.sh
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: php/${{ matrix.php-versions }}/bullseye/fpm
+          context: php/${{ matrix.php-versions }}/bullseye/${{ matrix.variant }}
           push: true
-          tags: icewind1991/php-dbg:${{ matrix.php-versions }}-fpm
+          tags: icewind1991/php-dbg:${{ matrix.php-versions }}-${{ matrix.variant }}
