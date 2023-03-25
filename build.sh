@@ -7,7 +7,7 @@ fi
 patch -N -p1 -d php < debug.patch
 patch -N -p1 -d php < version.patch
 
-versions=("7.3" "7.4" "8.0" "8.1")
+versions=("8.0" "8.1" "8.2")
 
 cd php; ./apply-templates.sh
 
