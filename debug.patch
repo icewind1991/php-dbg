@@ -1,16 +1,18 @@
 diff --git a/Dockerfile-linux.template b/Dockerfile-linux.template
-index 7c1d6a6..d02925e 100644
+index f980ecd3..f239de1a 100644
 --- a/Dockerfile-linux.template
 +++ b/Dockerfile-linux.template
-@@ -50,6 +50,7 @@ RUN apk add --no-cache \
+@@ -50,7 +50,8 @@ RUN apk add --no-cache \
  		curl \
+ 		openssl \
  		tar \
- 		xz \
-+		gdb \
- # https://github.com/docker-library/php/issues/494
- 		openssl
+-		xz
++		xz \
++		gdb
  
-@@ -71,6 +72,7 @@ RUN set -eux; \
+ # ensure www-data user exists
+ RUN set -eux; \
+@@ -67,6 +68,7 @@ RUN set -eux; \
  		ca-certificates \
  		curl \
  		xz-utils \
@@ -18,29 +20,7 @@ index 7c1d6a6..d02925e 100644
  	; \
  	rm -rf /var/lib/apt/lists/*
  {{ ) end -}}
-@@ -332,6 +334,7 @@ RUN set -eux; \
- 		--with-openssl \
- 		--with-readline \
- 		--with-zlib \
-+		--enable-debug \
- 		\
- {{ if env.variant == "cli" then ( -}}
- # https://github.com/docker-library/php/pull/1259
-@@ -385,21 +388,12 @@ RUN set -eux; \
- 	make -j "$(nproc)"; \
- 	find -type f -name '*.a' -delete; \
- 	make install; \
--	find \
--		/usr/local \
--		-type f \
--		-perm '/0111' \
--		-exec sh -euxc ' \
--			strip --strip-all "$@" || : \
--		' -- '{}' + \
--	; \
- 	make clean; \
- 	\
- # https://github.com/docker-library/php/issues/692 (copy default example "php.ini" files somewhere easily discoverable)
+@@ -414,7 +416,6 @@ RUN set -eux; \
  	cp -v php.ini-* "$PHP_INI_DIR/"; \
  	\
  	cd /; \

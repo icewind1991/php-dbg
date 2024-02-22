@@ -9,7 +9,7 @@ patch -N -p1 -d php < version.patch
 
 versions=("8.0" "8.1" "8.2" "8.3")
 
-cd php; ./apply-templates.sh
+cd php; DOCKER_PHP_ENABLE_DEBUG=1 ./apply-templates.sh
 
 for version in "${versions[@]}"; do
   docker build -t icewind1991/php-debug:$version-fpm -f php/$version/bullseye/fpm/Dockerfile php/$version/bullseye/fpm
