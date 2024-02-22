@@ -5,9 +5,8 @@ if [ ! -d php ]; then
 fi
 
 patch -N -p1 -d php < debug.patch
-patch -N -p1 -d php < version.patch
 
-versions=("8.0" "8.1" "8.2" "8.3")
+versions=("8.1" "8.2" "8.3")
 
 cd php; DOCKER_PHP_ENABLE_DEBUG=1 ./apply-templates.sh
 
