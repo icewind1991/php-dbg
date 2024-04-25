@@ -17,6 +17,7 @@ jobs:
       matrix:
         php-versions: ['8.1', '8.2', '8.3']
         variant: ['cli', 'apache', 'fpm']
+        base: ['bookworm', 'bullseye']
 
     steps:
       - name: Checkout patch files
@@ -43,6 +44,6 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v5
         with:
-          context: php/${{ matrix.php-versions }}/bullseye/${{ matrix.variant }}
+          context: php/${{ matrix.php-versions }}/${{ matrix.base }}/${{ matrix.variant }}
           push: true
-          tags: icewind1991/php-dbg:${{ matrix.php-versions }}-${{ matrix.variant }}
+          tags: icewind1991/php-dbg:${{ matrix.php-versions }}-${{ matrix.variant }}-${{ matrix.base }}
