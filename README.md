@@ -1,3 +1,5 @@
+# Moved to https://codeberg.org/icewind/php-dbg
+
 # PHP-DBG
 
 Docker images for php with debug symbols included
